@@ -49,14 +49,13 @@ test('Environment switches only the destination ID', () => {
   );
 });
 
-test('Catalog has the six flows with their preselected level', () => {
+test('Catalog has the five flows with their preselected level', () => {
   assert.deepEqual(
     FLOWS.map(({ value, level }) => [value, level]),
     [
       ['CREDIT_L1_MX', 'L1'],
       ['CREDIT_L2_MX', 'L2'],
       ['CREDIT_L1_FOREIGNER', 'L1'],
-      ['CREDIT_L1_MX_OCR', 'L1'],
       ['DEPOSITS_L2_MX', 'L2'],
       ['LUNA_L1_MX', 'L1'],
     ],

@@ -65,7 +65,6 @@ Only controls for the active type are shown.
 | CREDIT L1 MX | `CREDIT_L1_MX` | L1 | credit |
 | CREDIT L2 MX | `CREDIT_L2_MX` | L2 | credit |
 | CREDIT L1 FOREIGNER | `CREDIT_L1_FOREIGNER` | L1 | credit |
-| CREDIT L1 MX OCR | `CREDIT_L1_MX_OCR` | L1 | credit |
 | DEPOSITS L2 MX | `DEPOSITS_L2_MX` | L2 | deposits |
 | LUNA L1 MX | `LUNA_L1_MX` | L1 | luna |
 

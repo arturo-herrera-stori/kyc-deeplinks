@@ -19,7 +19,6 @@ export const FLOWS = deepFreeze([
   { value: 'CREDIT_L1_MX', label: 'CREDIT L1 MX', level: 'L1', group: 'credit' },
   { value: 'CREDIT_L2_MX', label: 'CREDIT L2 MX', level: 'L2', group: 'credit' },
   { value: 'CREDIT_L1_FOREIGNER', label: 'CREDIT L1 FOREIGNER', level: 'L1', group: 'credit' },
-  { value: 'CREDIT_L1_MX_OCR', label: 'CREDIT L1 MX OCR', level: 'L1', group: 'credit' },
   { value: 'DEPOSITS_L2_MX', label: 'DEPOSITS L2 MX', level: 'L2', group: 'deposits' },
   { value: 'LUNA_L1_MX', label: 'LUNA L1 MX', level: 'L1', group: 'luna' },
 ]);
