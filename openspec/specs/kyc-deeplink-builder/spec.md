@@ -147,10 +147,10 @@ La página SHALL mostrar un código QR que codifica exactamente el deeplink de l
 
 ### Requirement: Publicación como sitio estático
 
-El sitio SHALL poder publicarse en el plan gratuito de Netlify sin paso de build, sirviendo solo el contenido de la página (no archivos de planificación ni configuración del repositorio). La página SHALL ser usable en pantallas de teléfono.
+El sitio SHALL poder publicarse como sitio estático sin paso de build, sirviendo solo el contenido de la página (no archivos de planificación ni configuración del repositorio). La página SHALL ser usable en pantallas de teléfono. El proyecto MUST NOT requerir Netlify para publicarse.
 
 #### Scenario: Solo se publica el sitio
-- **WHEN** el sitio está desplegado en Netlify
+- **WHEN** el sitio está desplegado en el host de publicación configurado para el proyecto
 - **THEN** rutas como `/openspec/config.yaml` o `/package.json` responden 404
 
 #### Scenario: Uso en teléfono
