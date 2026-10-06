@@ -1,0 +1,10 @@
+{
+  "name": "deeplinks-tester",
+  "private": true,
+  "type": "module",
+  "description": "Constructor de deeplinks KYC de Stori para QA (DEV y QA).",
+  "scripts": {
+    "test": "node --test \"tests/**/*.test.js\"",
+    "start": "npx --yes serve public"
+  }
+}

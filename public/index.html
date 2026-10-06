@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Stori KYC Deeplinks</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script
+    src="https://cdn.jsdelivr.net/npm/qrcode-generator@2.0.4/dist/qrcode.js"
+    integrity="sha384-e9EFD6BGC90bkW9aDV5xbbBfzwN7G8YImHao2lfLVKV/hPB0E0go+H3I64h7oHtA"
+    crossorigin="anonymous"
+    defer></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <h1>Stori KYC Deeplinks</h1>
+      <p>Arma un deeplink, ábrelo o escanéalo</p>
+    </header>
+
+    <form id="builder" class="card builder" autocomplete="off">
+      <fieldset class="field">
+        <legend>Ambiente</legend>
+        <div class="segmented" data-options="environment"></div>
+      </fieldset>
+
+      <fieldset class="field">
+        <legend>Tipo</legend>
+        <div class="stack" data-options="type"></div>
+      </fieldset>
+
+      <fieldset class="field" data-param="flow">
+        <legend>Flow</legend>
+        <div class="chips" data-options="flow"></div>
+      </fieldset>
+
+      <fieldset class="field" data-param="destination">
+        <legend>Destination</legend>
+        <div class="chips" data-options="destination"></div>
+      </fieldset>
+
+      <fieldset class="field" data-param="level">
+        <legend>Level</legend>
+        <div class="segmented" data-options="level"></div>
+      </fieldset>
+    </form>
+
+    <section class="card result" aria-labelledby="result-title">
+      <h2 id="result-title" class="result-title">Deeplink</h2>
+      <code id="preview" class="preview" aria-live="polite"></code>
+
+      <div class="actions">
+        <a id="open" class="btn btn-primary" href="#">Abrir en la app</a>
+        <button id="copy" class="btn btn-secondary" type="button">Copiar</button>
+      </div>
+      <p id="copy-status" class="status" role="status" aria-live="polite"></p>
+
+      <div id="qr" class="qr"></div>
+    </section>
+
+    <p class="footer">Solo ambientes DEV y QA</p>
+  </main>
+</body>
+</html>
