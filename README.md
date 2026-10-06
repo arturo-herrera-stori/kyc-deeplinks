@@ -1,68 +1,140 @@
-# Stori KYC Deeplinks
+# 🔗 KYC Deeplinks Builder
 
-Página web para armar, abrir, copiar y escanear (QR) los deeplinks KYC de la app Stori en los ambientes **DEV** y **QA**.
+> **Build, preview, copy, and open** Stori KYC deeplinks for **DEV** and **QA** — no build step, no PROD.
 
-Tipos de deeplink:
+🌐 **Live app:** [arturo-herrera-stori.github.io/kyc-deeplinks](https://arturo-herrera-stori.github.io/kyc-deeplinks/)
 
-| Tipo | URL |
-|------|-----|
-| Flow | `stori://kyc?flow={flow}` |
-| Flow + Destination + Level | `stori://kyc?flow={flow}&destination={destination}&level={level}` |
-| Destination + Level | `stori://kyc?destination={destination}&level={level}` |
+---
 
-El ID de cada destination depende del ambiente seleccionado. PROD no está incluido a propósito.
+## ✨ What it does
 
-## Estructura
+| Step | You do | You get |
+|------|--------|---------|
+| 1️⃣ | Pick **environment**, **link type**, and options | A live `stori://kyc?...` URL |
+| 2️⃣ | Tap **Open in app** (phone) or **Copy** | Deeplink ready for QA |
 
 ```
-public/            <- lo único que se publica
-  index.html
-  favicon.svg
-  css/styles.css
-  js/catalog.js    <- flows, levels, destinations por ambiente y tipos de link
-  js/deeplink.js   <- arma la URL (sin DOM)
-  js/app.js        <- interfaz
-tests/             <- pruebas de deeplink.js
-.github/workflows/ <- despliegue a GitHub Pages
+  ┌─────────────┐     ┌──────────────┐     ┌─────────────────┐
+  │  Select     │ --> │   Preview    │ --> │ Open / Copy     │
+  │  DEV | QA   │     │ stori://kyc  │     │ on device       │
+  └─────────────┘     └──────────────┘     └─────────────────┘
 ```
 
-Sin build ni dependencias npm. La librería de QR se carga desde jsDelivr con versión fija e integridad SRI.
+⚠️ **PROD is intentionally excluded** — only non-production environments and IDs.
 
-## Correr en local
+---
 
-La página usa módulos ES, así que no funciona abriendo `index.html` directo (`file://`). Sírvela con un servidor estático:
+## 🚀 Quick start (local)
+
+The app uses ES modules; `file://` will **not** work.
 
 ```bash
-npm start                          # npx serve public
-# o
-python3 -m http.server -d public 8000
+npm start
+# → http://localhost:3000
 ```
 
-Para probar en el teléfono, abre la IP de tu computadora en la misma red (por ejemplo `http://192.168.1.20:8000`) o escanea el QR que muestra la página.
+📱 **On your phone (same Wi‑Fi):** open `http://<your-computer-ip>:3000`, build the link, then **Open in app**.
 
-## Pruebas
+---
+
+## 🧭 How to use the UI
+
+### 🌍 Environment
+
+| UI label | Stored value | Notes |
+|----------|--------------|--------|
+| **DEV** | `DEV` | Default on first visit |
+| **QA** | `QA` | Remembered in `localStorage` |
+
+Changing environment updates **destination IDs** in the URL (same destination name, different ID).
+
+### 🧩 Link type (pick one)
+
+| Type in UI | Query parameters | Example shape |
+|------------|------------------|---------------|
+| **Flow** | `flow` | `stori://kyc?flow=CREDIT_L1_MX` |
+| **Flow + Destination + Level** | `flow`, `destination`, `level` | `stori://kyc?flow=...&destination=...&level=L1` |
+| **Destination + Level** | `destination`, `level` | `stori://kyc?destination=...&level=L2` |
+
+Only controls for the active type are shown.
+
+### 🏷️ Flows (`flow` query value)
+
+| Label in UI | URL value (`flow=`) | Default level* | Color group |
+|-------------|---------------------|----------------|-------------|
+| CREDIT L1 MX | `CREDIT_L1_MX` | L1 | credit |
+| CREDIT L2 MX | `CREDIT_L2_MX` | L2 | credit |
+| CREDIT L1 FOREIGNER | `CREDIT_L1_FOREIGNER` | L1 | credit |
+| CREDIT L1 MX OCR | `CREDIT_L1_MX_OCR` | L1 | credit |
+| DEPOSITS L2 MX | `DEPOSITS_L2_MX` | L2 | deposits |
+| LUNA L1 MX | `LUNA_L1_MX` | L1 | luna |
+
+\*For **Flow + Destination + Level**, picking a flow **pre-selects** its default level; you can still change level manually.
+
+### 📊 Levels (`level` query value)
+
+| UI | URL |
+|----|-----|
+| L1 | `L1` |
+| L2 | `L2` |
+
+### 📍 Destinations (`destination` = environment-specific ID)
+
+You choose by **name**; the app sends the **numeric ID** for the selected environment:
+
+| Destination | DEV ID | QA ID |
+|-------------|--------|-------|
+| **T2P** | `fc2981118026611077` | `fc2980055818713477` |
+| **LUNA - New MP** | `fc3220397196754053` | `fc3221926378667141` |
+| **LUNA - Old MP** | `fc2717945212542021` | `fc2777295705517381` |
+
+---
+
+## 🛠️ Project layout
+
+```
+public/                 ← only this folder is published (GitHub Pages)
+  index.html
+  css/styles.css
+  js/catalog.js         ← enums: environments, flows, destinations, link types
+  js/deeplink.js        ← URL builder (no DOM)
+  js/app.js             ← UI wiring
+tests/                  ← deeplink.js unit tests
+.github/workflows/      ← deploy public/ on push to main
+```
+
+No npm dependencies at runtime. **Node 20+** for `npm test` only.
+
+---
+
+## 🧪 Tests
 
 ```bash
 npm test
 ```
 
-Requiere Node.js 20 o superior.
+Validates deeplink URL rules and that every destination has DEV + QA IDs.
 
-## Agregar un flow o destination
+---
 
-Todo vive en `public/js/catalog.js`; la interfaz se genera sola.
+## ➕ Extend the catalog
 
-- **Flow:** agrega un objeto a `FLOWS` con `value` (lo que va en la URL), `label`, `level` (el que se preselecciona) y `group` (`credit`, `deposits` o `luna`, define el color).
-- **Destination:** agrega un objeto a `DESTINATIONS` con `id`, `label` e `ids` con un ID para **cada** ambiente (`DEV` y `QA`).
+Edit **`public/js/catalog.js`** — the UI rebuilds from data.
 
-Después corre `npm test`: una prueba valida que todos los destinations tengan ID para cada ambiente.
+| Add… | Edit… |
+|------|--------|
+| **Flow** | `FLOWS[]`: `value`, `label`, `level`, `group` (`credit` \| `deposits` \| `luna`) |
+| **Destination** | `DESTINATIONS[]`: `id`, `label`, `ids.DEV`, `ids.QA` |
+| **Link type** | `LINK_TYPES[]`: `id`, `label`, `params` (query key order) |
 
-## Publicar en GitHub Pages
+Then run `npm test`.
 
-El repo canónico es [`arturo-herrera-stori/kyc-deeplinks`](https://github.com/arturo-herrera-stori/kyc-deeplinks). El workflow `.github/workflows/pages.yml` publica solo el contenido de `public/` en cada push a `main` que toque esa carpeta (o el propio workflow).
+---
 
-1. En GitHub: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-2. Tras el primer deploy exitoso, el sitio queda en:
-   `https://arturo-herrera-stori.github.io/kyc-deeplinks/`
+## 📤 Publishing (GitHub Pages)
 
-Nota: en repos **privados**, GitHub Pages requiere un plan de pago (Pro/Team/Enterprise). En repos públicos Pages es gratuito.
+Repo: [`arturo-herrera-stori/kyc-deeplinks`](https://github.com/arturo-herrera-stori/kyc-deeplinks)
+
+- Push to **`main`** with changes under `public/**` → **Deploy GitHub Pages** workflow runs automatically.
+- Site URL: `https://arturo-herrera-stori.github.io/kyc-deeplinks/`
+- GitHub **Settings → Pages → Source: GitHub Actions** (one-time setup).

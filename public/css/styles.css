@@ -273,23 +273,3 @@ body {
 
 .status[data-state="ok"] { color: var(--credit); }
 .status[data-state="error"] { color: #dc2626; }
-
-.qr {
-  display: flex;
-  justify-content: center;
-  padding-top: 4px;
-}
-
-.qr svg {
-  width: 100%;
-  max-width: 220px;
-  height: auto;
-  border-radius: 8px;
-}
-
-.qr-fallback {
-  margin: 0;
-  color: var(--muted);
-  font-size: 13px;
-  text-align: center;
-}

@@ -17,7 +17,6 @@ const preview = document.getElementById('preview');
 const openLink = document.getElementById('open');
 const copyButton = document.getElementById('copy');
 const copyStatus = document.getElementById('copy-status');
-const qrContainer = document.getElementById('qr');
 
 function loadEnvironment() {
   try {
@@ -69,20 +68,6 @@ function renderOptions() {
   });
 }
 
-function renderQr(link) {
-  if (typeof window.qrcode !== 'function') {
-    const notice = document.createElement('p');
-    notice.className = 'qr-fallback';
-    notice.textContent = 'No se pudo cargar el generador de QR. Usa "Copiar" o "Abrir en la app".';
-    qrContainer.replaceChildren(notice);
-    return;
-  }
-  const qr = window.qrcode(0, 'M');
-  qr.addData(link);
-  qr.make();
-  qrContainer.innerHTML = qr.createSvgTag({ cellSize: 4, margin: 4, scalable: true, title: link });
-}
-
 function render() {
   Object.keys(OPTIONS).forEach((name) => {
     const input = form.querySelector(`input[name="${name}"][value="${state[name]}"]`);
@@ -97,7 +82,6 @@ function render() {
   const link = buildDeeplink(state);
   preview.textContent = link;
   openLink.href = link;
-  renderQr(link);
 }
 
 function showCopyStatus(message, kind) {
