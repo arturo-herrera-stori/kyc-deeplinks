@@ -70,13 +70,14 @@ En el tipo `Flow + Destination + Level`, al seleccionar un flow la página SHALL
 
 ### Requirement: Destinations por ambiente
 
-La página SHALL ofrecer un selector de ambiente con solo `DEV` y `QA`, y los destinations `T2P`, `LUNA - New MP` y `LUNA - Old MP`. El usuario elige el destination por nombre y la página SHALL enviar el ID del ambiente seleccionado:
+La página SHALL ofrecer un selector de ambiente con solo `DEV` y `QA`, y los destinations `T2P`, `LUNA - New MP`, `LUNA - Old MP` y `UAP`. El usuario elige el destination por nombre y la página SHALL enviar el ID del ambiente seleccionado:
 
 | Destination | DEV | QA |
 |-------------|-----|-----|
 | T2P | `fc2981118026611077` | `fc2980055818713477` |
 | LUNA - New MP | `fc3220397196754053` | `fc3221926378667141` |
 | LUNA - Old MP | `fc2717945212542021` | `fc2777295705517381` |
+| UAP | `fc2664661432842565` | `fc2664660149516613` |
 
 La página y los archivos publicados MUST NOT incluir un ambiente PROD ni IDs de destination de PROD.
 

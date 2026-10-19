@@ -40,6 +40,11 @@ export const DESTINATIONS = deepFreeze([
     label: 'LUNA - Old MP',
     ids: { DEV: 'fc2717945212542021', QA: 'fc2777295705517381' },
   },
+  {
+    id: 'uap',
+    label: 'UAP',
+    ids: { DEV: 'fc2664661432842565', QA: 'fc2664660149516613' },
+  },
 ]);
 
 // `params` order is the query-string order of the generated deeplink.
